@@ -1,0 +1,21 @@
+CREATE TABLE mesas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  number INT NOT NULL UNIQUE
+);
+
+CREATE TABLE mozos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  username VARCHAR(100) NOT NULL,
+  password VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE productos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  price INT NOT NULL,
+  category VARCHAR(50) NOT NULL
+);
+
+-- COMANDO PARA RECREAR LA BASE DE DATOS EN OTRO EQUIPO UwU
+-- mysql -u root -p mydb < server/src/config/init_db.sql
