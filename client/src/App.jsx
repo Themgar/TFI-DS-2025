@@ -15,6 +15,7 @@ import MozoHome from "./pages/mozo/MozoHome";
 import MozoLayout from "./layout/MozoLayout";
 import AgregarPedido from "./pages/mozo/AgregarPedido";
 import SeleccionarProducto from "./pages/mozo/SeleccionarProducto";
+import ComandasActivas from "./pages/mozo/ComandasActivas";   // 👈 NUEVO
 
 // --- SISTEMA DE AUTENTICACIÓN ---
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -29,7 +30,6 @@ function App() {
           {/* =============== LOGIN =============== */}
           <Route path="/" element={<AdminLogin />} />
 
-
           {/* =============== ADMIN (SIN SIDEBAR) =============== */}
           <Route
             path="/admin"
@@ -39,7 +39,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
 
           {/* =============== ADMIN (CON SIDEBAR) =============== */}
           <Route
@@ -54,7 +53,6 @@ function App() {
             <Route path="/admin/mesas" element={<Mesas />} />
           </Route>
 
-
           {/* =============== MOZO (SIN SIDEBAR) =============== */}
           <Route
             path="/mozo/home"
@@ -65,7 +63,6 @@ function App() {
             }
           />
 
-
           {/* =============== MOZO (CON SIDEBAR) =============== */}
           <Route
             element={
@@ -74,10 +71,12 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route path="/mozo/tomar-pedido" element={<AgregarPedido />} />
+            <Route path="/mozo/agregar-pedido" element={<AgregarPedido />} />
             <Route path="/mozo/seleccionar-producto" element={<SeleccionarProducto />} />
-          </Route>
 
+            {/* Ruta nueva para comandas activas */}
+            <Route path="/mozo/pedidos-abiertos" element={<ComandasActivas />} />
+          </Route>
 
         </Routes>
       </BrowserRouter>

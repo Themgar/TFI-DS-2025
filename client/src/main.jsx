@@ -3,13 +3,15 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
-// 👉 IMPORTAR EL CONTEXT
 import { PedidoProvider } from './context/PedidoContext.jsx'
+import { ComandasProvider } from './context/ComandasContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <PedidoProvider>
-      <App />
+      <ComandasProvider>
+        <App />
+      </ComandasProvider>
     </PedidoProvider>
-  </StrictMode>
+  </StrictMode>,
 )

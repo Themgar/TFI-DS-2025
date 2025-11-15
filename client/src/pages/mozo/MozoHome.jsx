@@ -18,7 +18,7 @@ export default function MozoHome() {
       {/* Botones principales */}
       <div className="flex flex-col gap-4 w-full max-w-xs">
         <button
-          onClick={() => navigate("/mozo/tomar-pedido")}
+          onClick={() => navigate("/mozo/agregar-pedido")}
           className="bg-red-500 text-white text-lg font-semibold py-3 rounded-lg shadow-md hover:bg-red-600 transition"
         >
           Tomar pedido
