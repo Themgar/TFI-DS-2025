@@ -5,12 +5,15 @@ import App from './App.jsx'
 
 import { PedidoProvider } from './context/PedidoContext.jsx'
 import { ComandasProvider } from './context/ComandasContext.jsx'
+import { HistorialProvider } from './context/HistorialContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <PedidoProvider>
       <ComandasProvider>
-        <App />
+        <HistorialProvider>
+          <App />
+        </HistorialProvider>
       </ComandasProvider>
     </PedidoProvider>
   </StrictMode>,

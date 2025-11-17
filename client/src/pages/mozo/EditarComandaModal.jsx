@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useComandas } from "../../context/ComandasContext";
+import { useHistorial } from "../../context/HistorialContext";
 import { IoTrashOutline, IoAdd } from "react-icons/io5";
 
 export default function EditarComandaModal({ comanda, onClose }) {
@@ -12,6 +13,8 @@ export default function EditarComandaModal({ comanda, onClose }) {
     calcularTotal,
     setComandaEnEdicionId,
   } = useComandas();
+
+  const { agregarAlHistorial } = useHistorial();
 
   const [itemsLocal, setItemsLocal] = useState(comanda.items || []);
 
@@ -42,7 +45,50 @@ export default function EditarComandaModal({ comanda, onClose }) {
 
   const handleCerrarMesa = () => {
     if (!confirm("¿Cerrar mesa y dar por pagado?")) return;
+
+    // 🔹 Obtenemos datos del mozo logueado
+    let mozoInfo = null;
+    try {
+      const raw = localStorage.getItem("mozo");
+      if (raw) {
+        const m = JSON.parse(raw);
+        mozoInfo = {
+          id: m.id,
+          name: m.name,
+          username: m.username,
+        };
+      }
+    } catch (err) {
+      console.error("Error leyendo mozo desde localStorage:", err);
+    }
+
+    // 🔹 Calculamos total con los items locales (por si no apretó 'Aceptar')
+    const total = calcularTotal({ ...comanda, items: itemsLocal });
+
+    // 🔹 Armamos registro de historial
+    const ahora = new Date();
+    const registroHistorial = {
+      id: crypto.randomUUID(),         // id propio del historial
+      idComanda: comanda.id,           // referencia a la comanda original
+      mesa: comanda.mesa,
+      items: itemsLocal,
+      total,
+      mozo: mozoInfo,
+      fecha: ahora.toLocaleDateString("es-AR"),
+      hora: ahora.toLocaleTimeString("es-AR", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      timestamp: ahora.getTime(),
+    };
+
+    // 🔹 Guardamos en HistorialContext (y por ende en localStorage)
+    agregarAlHistorial(registroHistorial);
+
+    // 🔹 Cerramos la comanda activa (la sacamos de la lista)
     cerrarComanda(comanda.id);
+
+    // 🔹 Cerramos modal
     onClose();
   };
 
@@ -56,7 +102,7 @@ export default function EditarComandaModal({ comanda, onClose }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-4 flex flex-col gap-3">
-        
+
         <h2 className="text-xl font-semibold mb-2">
           Mesa {comanda.mesa}
         </h2>

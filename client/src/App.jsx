@@ -15,7 +15,10 @@ import MozoHome from "./pages/mozo/MozoHome";
 import MozoLayout from "./layout/MozoLayout";
 import AgregarPedido from "./pages/mozo/AgregarPedido";
 import SeleccionarProducto from "./pages/mozo/SeleccionarProducto";
-import ComandasActivas from "./pages/mozo/ComandasActivas";   // 👈 NUEVO
+import ComandasActivas from "./pages/mozo/ComandasActivas";
+
+// 🔹 NUEVO: historial
+import Historial from "./pages/mozo/Historial";
 
 // --- SISTEMA DE AUTENTICACIÓN ---
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -73,9 +76,9 @@ function App() {
           >
             <Route path="/mozo/agregar-pedido" element={<AgregarPedido />} />
             <Route path="/mozo/seleccionar-producto" element={<SeleccionarProducto />} />
-
-            {/* Ruta nueva para comandas activas */}
             <Route path="/mozo/pedidos-abiertos" element={<ComandasActivas />} />
+            {/* 🔹 NUEVA RUTA: historial */}
+            <Route path="/mozo/historial" element={<Historial />} />
           </Route>
 
         </Routes>
